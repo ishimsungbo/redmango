@@ -35,4 +35,9 @@ public class TestServiceImpl implements TestService {
         return sqlMapper.selectClmLineAmt(param);
     }
 
+    @Override
+    public String selectMyProcedureCall(Map<String, Object> param) {
+        return sqlMapper.selectMyProcedureCall(param);
+    }
+
 }

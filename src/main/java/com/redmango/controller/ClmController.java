@@ -31,6 +31,22 @@ public class ClmController {
     @Autowired
     private TestService testService;
 
+    @RequestMapping("/procedureCall")
+    public String procedureCall(){
+        long beforeTime = System.currentTimeMillis();
+
+        long afterTime = System.currentTimeMillis();
+        long secDiffTime = (afterTime - beforeTime)/1000; //두 시간에 차 계산
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("INPUT_PARAM","SUNGBO");
+
+        String result = testService.selectMyProcedureCall(map);
+        log.info("수행 결과 ===>" + result.toString());
+
+        return "성공 시간 차이 : " + secDiffTime;
+    }
+
     @RequestMapping("/case01")
     public String case01(){
 

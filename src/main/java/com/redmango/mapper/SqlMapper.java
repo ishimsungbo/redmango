@@ -22,4 +22,5 @@ public interface SqlMapper {
 
     List<Map<String, Object>> selectClmLineAmt(Map<String, Object> param);
 
+    String selectMyProcedureCall(Map<String, Object> param);
 }

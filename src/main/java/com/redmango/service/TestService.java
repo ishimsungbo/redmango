@@ -21,4 +21,6 @@ public interface TestService {
     List<Map<String, Object>> selectClmHeaderList();
 
     List<Map<String, Object>> selectClmLineAmt(Map<String, Object> param);
+
+    String selectMyProcedureCall(Map<String, Object> param);
 }

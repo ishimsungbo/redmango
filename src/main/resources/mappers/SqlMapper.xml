@@ -26,4 +26,19 @@
         WHERE CLM_ID = ${CLM_ID}
         GROUP BY CLM_ID ORDER BY CLM_ID]]>
     </select>
+
+    <!-- <resultMap id="CLM_MAP" type="hashmap" />
+               /*CALL MY_PROCEDURE(
+                #{INPUT_PARAM},
+                 #{OUT_CURSOR, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=CLM_MAP}
+                #{OUT_AMT, mode=INOUT, jdbcType=VARCHAR, javaType=String}
+     */
+    -->
+    <select id="selectMyProcedureCall" statementType="CALLABLE" parameterType="hashmap" resultType="String">
+        {
+            CALL MY_PROCEDURE(
+                #{INPUT_PARAM},
+                #{OUT_AMT, mode=INOUT, jdbcType=VARCHAR, javaType=String}
+        }
+    </select>
 </mapper>
