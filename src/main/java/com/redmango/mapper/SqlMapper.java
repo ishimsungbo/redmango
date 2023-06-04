@@ -19,4 +19,7 @@ import java.util.Map;
 @Mapper
 public interface SqlMapper {
     List<Map<String, Object>> selectClmHeaderList();
+
+    List<Map<String, Object>> selectClmLineAmt(Map<String, Object> param);
+
 }

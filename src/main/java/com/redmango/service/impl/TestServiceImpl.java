@@ -29,4 +29,10 @@ public class TestServiceImpl implements TestService {
     public List<Map<String, Object>> selectClmHeaderList() {
         return sqlMapper.selectClmHeaderList();
     }
+
+    @Override
+    public List<Map<String, Object>> selectClmLineAmt(Map<String, Object> param) {
+        return sqlMapper.selectClmLineAmt(param);
+    }
+
 }

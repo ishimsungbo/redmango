@@ -3,7 +3,27 @@
 
 <mapper namespace="com.redmango.mapper.SqlMapper">
     <select id="selectClmHeaderList" resultType="hashmap">
-        SELECT *
+        SELECT CLM_ID,
+               CLM01_AMT,
+               CLM02_AMT,
+               CLM03_AMT,
+               CLM04_AMT,
+               CLM05_AMT,
+               TO_CHAR(CREATION_DATE,'YYYY-MM-DD') AS CREATION_DATE
         FROM TB_CLM_HEADER
+        ORDER BY CLM_ID
+    </select>
+
+    <select id="selectClmLineAmt"  parameterType="hashMap" resultType="hashmap">
+        <![CDATA[
+        SELECT CLM_ID,
+               SUM(CLM01_AMT) AS CLM01_AMT,
+               SUM(CLM02_AMT) AS CLM02_AMT,
+               SUM(CLM03_AMT) AS CLM03_AMT,
+               SUM(CLM04_AMT) AS CLM04_AMT,
+               SUM(CLM05_AMT) AS CLM05_AMT
+        FROM TB_CLM_LINE
+        WHERE CLM_ID = ${CLM_ID}
+        GROUP BY CLM_ID ORDER BY CLM_ID]]>
     </select>
 </mapper>
