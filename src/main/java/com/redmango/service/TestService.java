@@ -1,0 +1,23 @@
+package com.redmango.service;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * packageName    : com.redmango.service.impl
+ * fileName       : TestService
+ * author         : sungbo
+ * date           : 2023-06-03
+ * description    :
+ * ===========================================================
+ * DATE              AUTHOR             NOTE
+ * -----------------------------------------------------------
+ * 2023-06-03        sungbo       최초 생성
+ */
+
+
+public interface TestService {
+
+    List<Map<String, Object>> selectClmHeaderList();
+
+}
