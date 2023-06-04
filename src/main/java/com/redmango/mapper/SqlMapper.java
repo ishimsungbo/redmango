@@ -22,5 +22,23 @@ public interface SqlMapper {
 
     List<Map<String, Object>> selectClmLineAmt(Map<String, Object> param);
 
-    String selectMyProcedureCall(Map<String, Object> param);
+    /***
+     * @param param
+     * 프로시져는 맵으로 던지면 던진 객체로 받는다.
+     */
+    void selectMyProcedureCall(Map<String, Object> param);
+
+    /**
+     * DECLARE 문을 이용한 프로그래밍
+     * @return
+     */
+
+    void selectMyDeclare(Map<String, Object> param);
+
+
+    void selectMyDeclare2(Map<String, Object> param);
+
+    String selectString();
+
+
 }

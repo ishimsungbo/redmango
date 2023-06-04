@@ -23,4 +23,10 @@ public interface TestService {
     List<Map<String, Object>> selectClmLineAmt(Map<String, Object> param);
 
     String selectMyProcedureCall(Map<String, Object> param);
+
+    String selectString(Map<String, Object> param);
+
+    String selectMyDeclare(Map<String, Object> param);
+
+    String selectMyDeclare2(Map<String, Object> param);
 }

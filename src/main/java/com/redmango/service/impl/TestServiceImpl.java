@@ -2,9 +2,12 @@ package com.redmango.service.impl;
 
 import com.redmango.mapper.SqlMapper;
 import com.redmango.service.TestService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +23,7 @@ import java.util.Map;
  * 2023-06-03        sungbo       최초 생성
  */
 @Service
+@Slf4j
 public class TestServiceImpl implements TestService {
 
     @Resource(name="sqlMapper")
@@ -37,7 +41,26 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public String selectMyProcedureCall(Map<String, Object> param) {
-        return sqlMapper.selectMyProcedureCall(param);
+
+        sqlMapper.selectMyProcedureCall(param);
+        log.info("프로시져 호출 결과 : " + param.get("OUT_AMT").toString());
+        return param.toString();
     }
 
+    @Override
+    public String selectMyDeclare(Map<String, Object> param) {
+        sqlMapper.selectMyDeclare(param);
+        return param.toString();
+    }
+
+    @Override
+    public String selectMyDeclare2(Map<String, Object> param) {
+        sqlMapper.selectMyDeclare2(param);
+        return param.toString();
+    }
+
+    @Override
+    public String selectString(Map<String, Object> param) {
+        return sqlMapper.selectString();
+    }
 }

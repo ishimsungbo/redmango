@@ -34,11 +34,97 @@
                 #{OUT_AMT, mode=INOUT, jdbcType=VARCHAR, javaType=String}
      */
     -->
-    <select id="selectMyProcedureCall" statementType="CALLABLE" parameterType="hashmap" resultType="String">
+    <select id="selectMyProcedureCall" statementType="CALLABLE" parameterType="HashMap" resultType="HashMap">
         {
             CALL MY_PROCEDURE(
                 #{INPUT_PARAM},
-                #{OUT_AMT, mode=INOUT, jdbcType=VARCHAR, javaType=String}
+                #{OUT_AMT, mode=OUT, jdbcType=VARCHAR, javaType=String})
         }
+    </select>
+
+
+    <!-- oracle declare 문을 이용해서 사용할 때 -->
+    <select id="selectMyDeclare" statementType="CALLABLE" parameterType="HashMap">
+<![CDATA[
+        { CALL
+            DECLARE
+            blamt  int := 1000;
+            sumamt varchar(255) := '200000';
+            BEGIN
+
+            #{IN_PARAM_VALUE, mode=OUT , jdbcType=VARCHAR, javaType=String} := sumamt;
+            #{OUT_BALANCE_AMT, mode=OUT , jdbcType=VARCHAR, javaType=String} := blamt;
+            #{OUT_SUMMARY_AMT, mode=OUT , jdbcType=VARCHAR, javaType=String} := sumamt;
+
+        END
+        }
+            ]]>
+    </select>
+
+    <!-- 커서를 정의해서 정보를 자바로 받아보기 -->
+    <resultMap id="resultList" type="Hashmap" />
+    <select id="selectMyDeclare2" statementType="CALLABLE" parameterType="HashMap">
+        <![CDATA[
+        {
+            CALL
+
+            DECLARE
+                V_CLM_ID NUMBER;
+                V_CLM01_AMT NUMBER;
+                V_CNT NUMBER := 0 ;
+                V_AMT NUMBER := 0 ;
+                CUR_CLM_HEADER    SYS_REFCURSOR;
+
+            BEGIN
+                       OPEN CUR_CLM_HEADER FOR
+               SELECT  CLM_ID,
+                CLM01_AMT
+
+              FROM TB_CLM_HEADER;
+
+            -- LOOP
+            --FETCH CUR_CLM_HEADER INTO V_CLM_ID, V_CLM01_AMT;
+                    --  EXIT WHEN CUR_CLM_HEADER%NOTFOUND;
+
+            --              V_CNT := V_CNT + 1;
+
+--                SELECT SUM(CLM01_AMT)
+--              INTO V_AMT
+--              FROM TB_CLM_LINE
+--              WHERE CLM_ID = V_CLM_ID;
+
+            --    END LOOP;
+            --CLOSE CUR_CLM_HEADER; --커서를 닫기전에 받는다.
+
+            #{OUT_AMT, mode=OUT , jdbcType=VARCHAR, javaType=String} := V_AMT;
+            #{OUT_CNT, mode=OUT , jdbcType=VARCHAR, javaType=String} := V_CNT;
+            #{resultList, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=resultList}:=CUR_CLM_HEADER;
+            END
+        }]]>
+    </select>
+
+
+    <select id="selectMyDeclare3" statementType="CALLABLE" parameterType="HashMap">
+        <![CDATA[
+        {
+            CALL
+
+            DECLARE
+            CURSOR sales_rep_cur
+                  IS
+            BEGIN
+
+
+
+            END
+        }]]>
+</select>
+
+
+    <select id="selectString" resultType="String">
+        <![CDATA[
+        select 'SUNGBO' AS MY_NAME
+        from dual
+            ]]>
     </select>
 </mapper>

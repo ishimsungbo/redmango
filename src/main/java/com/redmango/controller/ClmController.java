@@ -31,6 +31,29 @@ public class ClmController {
     @Autowired
     private TestService testService;
 
+
+    @RequestMapping("/declare02")
+    public String declareExample02(){
+
+        Map<String, Object> map = new HashMap<>();
+
+        testService.selectMyDeclare2(map);
+
+        return map.toString();
+    }
+    @RequestMapping("/declare")
+    public String declareExample(){
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("IN_PARAM_VALUE","inVariable");
+        map.put("OUT_BALANCE_AMT","0");
+        map.put("OUT_SUMMARY_AMT","0");
+
+        testService.selectMyDeclare(map);
+
+        return map.toString();
+    }
+
     @RequestMapping("/procedureCall")
     public String procedureCall(){
         long beforeTime = System.currentTimeMillis();
@@ -39,7 +62,8 @@ public class ClmController {
         long secDiffTime = (afterTime - beforeTime)/1000; //두 시간에 차 계산
 
         Map<String, Object> map = new HashMap<>();
-        map.put("INPUT_PARAM","SUNGBO");
+        map.put("INPUT_PARAM","inVariable");
+        map.put("OUT_AMT","outVariable");
 
         String result = testService.selectMyProcedureCall(map);
         log.info("수행 결과 ===>" + result.toString());
@@ -49,38 +73,22 @@ public class ClmController {
 
     @RequestMapping("/case01")
     public String case01(){
-
-        List<Map<String, Object>>  headerList = testService.selectClmHeaderList();
-
-        long beforeTime = System.currentTimeMillis();
-
-        List<Map<String, Object>> list = headerList.stream()
+        List<Map<String, Object>>  headerList = testService.selectClmHeaderList()
+                .stream()
                 .map(map ->{
-                    log.info(" 로그 시작");
-
-                    log.info("헤더로그....." + map.toString());
-
                     Map<String, Object> param = new HashMap<>();
                     param.put("CLM_ID",map.get("CLM_ID"));
-
                     List<Map<String, Object>> linelist = testService.selectClmLineAmt(param);
-
                     if(linelist.size() > 0){
                         log.info(" 라인 정보가 있음 ===========================================");
-                        map.put("NEW_AMT",headerList.get(0).get("NEW_AMT"));
+                        map.put("NEW_AMT",map.get("NEW_AMT"));
                     }else{
                         log.info(" 라인 정보가 없음 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
                     }
-
                     return map;
                 })
                 .collect(Collectors.toList());
-
-        long afterTime = System.currentTimeMillis();
-        long secDiffTime = (afterTime - beforeTime)/1000; //두 시간에 차 계산
-        //System.out.println("시간차이(m) : "+secDiffTime);
-
-        return "성공 시간 차이 : " + secDiffTime;
+        return "성공";
     }
 
     @RequestMapping("/case02")
@@ -124,5 +132,11 @@ public class ClmController {
         long secDiffTime = (afterTime - beforeTime)/1000; //두 시간에 차 계산
         //System.out.println("시간차이(m) : "+secDiffTime);
         return "성공 시간 차이 : " + secDiffTime;
+    }
+
+    @RequestMapping("/getString")
+    public String selectString(){
+        Map<String, Object> param = new HashMap<>();
+        return testService.selectString(param);
     }
 }
